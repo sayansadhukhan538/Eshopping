@@ -3,8 +3,6 @@ import { getAllCategory, getSingleCategory } from "../service/Category";
 import { Grid, Tab, Tabs } from "@mui/material";
 import BasicCard from "../components/CategoryCard";
 
-
-
 export default function Home() {
     const [type, setType] = useState(0);
     const [data, setData] = useState([]);
@@ -34,40 +32,41 @@ export default function Home() {
     },[type])
   return (
     <>
-    <Tabs
+        <Grid container spacing={2}>
+        <Grid   item xs={12} sm={12} md={12} lg={12}>
+        <Tabs
           value={type}
-          
+          sx={{minWidth:'100vw', color:'black'}}
           onChange={(event, newValue) => {
             setType(newValue);
             
           }}
-          style={{zIndex:'1', paddingBottom: 5, margin:'10px',marginLeft:'36px', position:'fixed', top:'90px', left:'2%', width:'100%'}}
+        //   style={{zIndex:'1', paddingBottom: 5, margin:'10px',marginLeft:'36px', position:'fixed', top:'90px', left:'2%', width:'100%'}}
           aria-label="disabled tabs example"
         >
-            {data && data.map((e, i)=>{
+            {data && data?.map((e, i)=>{
                 return (
-                    <Tab key={i} style={{ width: "23%", color:'white',  }} label={e} />
+                    <Tab key={i} style={{ width: "23%", color:'default',  }} label={e} />
                 )
             })}
         </Tabs>
-        <Grid container spacing={2}> {singleCategory && singleCategory.map((e)=>{
-            console.log(singleCategory)
+        </Grid>
+             {singleCategory && singleCategory.map((e)=>{
+            
+          
             return(
-                <BasicCard key={e.id}
-                title={e.title}
-                rating={e.rating.rate}
-                count={e.rating.count}
-                    category={e.category}
-                    desc={e.description}
-                    img={e.image}
-                    price={e.price}
-                    id={e.id}
-
+                <Grid  key={e.id} item xs={12} sm={6} md={3} lg={4}>
+                <BasicCard 
                 
+                data = {e}
+                    
                 />
+                </Grid>
             )
         })}
+
         </Grid>
+        
         </>
   );
 }

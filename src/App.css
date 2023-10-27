@@ -5,11 +5,4 @@
   overflow-x: hidden;
   overflow-y:auto;
 }
-.grid{
-  margin-block: 123px;
-  display: flex;
-  flex-wrap: wrap;
-  
-  height: 100vh;
-  
-}
+
