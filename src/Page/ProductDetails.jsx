@@ -32,9 +32,9 @@ export default function ProductDetails() {
   const { addToCart, removeFromCart, cart, handleQuantityChange } = useContext(CartContext);
   const {addToWishList,removeFromWishList, wishList} = useContext(WishContext);
   const navigate = useNavigate();
+  const productInCart = cart.find((product) => product.id === parseInt(id));
+  console.log({id,productInCart, cart})
   const [quantity, setQuantity] = useState(1);
-
-
   async function getSingleDetails() {
     const result = await getSingleProduct(id);
     if (result.isSuccess) {
@@ -43,20 +43,16 @@ export default function ProductDetails() {
     }
   }
   
-useEffect(() => {
-    const productInCart = cart.find((product) => product.id === data?.id);
-    if (productInCart) {
-      setQuantity(productInCart.quantity);
-    } else {
-      setQuantity(1);
-    }
-  }, [cart, data]);
+// useEffect(() => {
+//     const productInCart = cart.find((product) => product.id === data?.id);
+//     if (productInCart) {
+//       setQuantity(productInCart.quantity);
+//     } else {
+//       setQuantity(1);
+//     }
+//   }, [cart, data]);
   
-
-
-  
-
-  
+ 
   useEffect(() => {
     getSingleDetails();
     console.log("Updated quantity:", quantity);
@@ -166,10 +162,17 @@ useEffect(() => {
                       >
                         Select Quantity
                       </InputLabel>
-                      <Select  value={quantity}
+                      <Select  value={productInCart?productInCart.quantity:quantity}
                       onChange={(e) =>
+                        {if(productInCart){
+                          handleQuantityChange(e,data.id)
+                        }else{
+                          setQuantity(e.target.value)
+                        }
+                          
+                          
                         
-                        handleQuantityChange(e,data.id)
+                        }
                       }>
                         {[1, 2, 3, 4, 5].map((value) => (
                           <MenuItem key={value} value={value}>
